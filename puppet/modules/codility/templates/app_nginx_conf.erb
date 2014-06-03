@@ -1,0 +1,23 @@
+server {
+        default_type text/html;
+        root <%= @document_root %>;
+        index <%= @dir_index %>;
+        server_name dev.<%= @app_name %>.com;
+        listen 80;
+
+        rewrite_log off;
+        access_log /var/log/nginx/<%= @app_name %>/<%= @app_name %>-access.log;
+        error_log /var/log/nginx/<%= @app_name %>/<%= @app_name %>-error.log notice;
+
+        location ~/$ {
+          autoindex on;
+        }
+
+        location ~\.php$ {
+                include fastcgi_params;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                fastcgi_pass <%= @listen_url %>;
+                fastcgi_param DOCUMENT_ROOT <%= @document_root %>;
+                fastcgi_param SCRIPT_FILENAME <%= @document_root %>$fastcgi_script_name;
+        }
+}
