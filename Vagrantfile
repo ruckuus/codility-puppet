@@ -7,6 +7,11 @@ puts <<eof
 Hello, Codility!
 eof
 
+$post = <<SCRIPT
+sudo service nginx restart
+sudo service php5-fpm restart
+SCRIPT
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "dev.codility.com"
   config.vm.box = "hashicorp/precise64"
@@ -15,11 +20,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "developer", primary: true do |developer|
     developer.vm.synced_folder "repo", "/var/www", :nfs => { :mount_options => ["dmode=777, fmode=666"] }
-   # developer.vm.provision "shell", path: "./repo/get_foliopages.sh"
     developer.vm.provision "puppet" do |puppet|
       puppet.module_path = "puppet/modules"
       puppet.manifests_path = "puppet"
       puppet.manifest_file = "manifests/init.pp"
     end
+    developer.vm.provision "shell", inline: $post, privileged: false
   end
 end
