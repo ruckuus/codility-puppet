@@ -58,9 +58,9 @@ class codility(
     document_root => $document_root,
   }
 
-#  class { 'codility::appinstall':
-#    appname => $app_name,
-#    source => $source,
-#    document_root => $document_root,
-#  }
+  class { 'codility::appinstall':
+    appname => $app_name,
+    source => $source,
+    document_root => $document_root,
+  }
 }

@@ -19,18 +19,23 @@ class codility::appinstall(
       command => "mkdir -p /var/www/${appname}" 
     }
 
+    exec { 'clean_up':
+      command => "rm -rf /var/www/${appname}/*"
+    }
+
     exec { "retrieve_${appname}":
       cwd => "/var/www/${appname}",
       command => "wget -q ${source} -O /tmp/${appname}",
       path => ['/usr/bin'],
       creates => "/tmp/${appname}",
       notify => Exec["extract_${appname}"],
+      require => Exec['clean_up'],
     }
 
     exec { "extract_${appname}":
-      command => "/usr/bin/unzip /tmp/${appname} -d /var/www/${appname}",
-      path => ['/usr/bin'],
-      require => Exec["retrieve_${appname}"],
+      command => "unzip -o /tmp/${appname} -d /var/www/${appname}",
+      require => [Package['unzip'], Exec["retrieve_${appname}"]],
+      notify => Exec['restart_nginx'],
     }
   }
 
