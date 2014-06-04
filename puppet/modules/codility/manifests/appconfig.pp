@@ -37,7 +37,8 @@ class codility::appconfig(
 
   exec { 'restart_nginx':
     command => "/usr/sbin/service nginx restart",
-    unless => "/usr/sbin/nginx -t"
+    unless => "/usr/sbin/nginx -t",
+    require => [File['app_nginx_conf'], File['app_nginx_log_dirs'], File['app_nginx_conf_enabled']],
   }
 
   service { 'nginx':
