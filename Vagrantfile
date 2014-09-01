@@ -27,4 +27,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     developer.vm.provision "shell", inline: $post, privileged: false
   end
+
+  config.vm.define "frontend", primary: true do |developer|
+    developer.vm.synced_folder "repo", "/var/www", :nfs => { :mount_options => ["dmode=777, fmode=666"] }
+    developer.vm.provision "puppet" do |puppet|
+      puppet.module_path = "puppet/modules"
+      puppet.manifests_path = "puppet"
+      puppet.manifest_file = "manifests/init.pp"
+    end
+    developer.vm.provision "shell", inline: $post, privileged: false
+  end
+
 end
