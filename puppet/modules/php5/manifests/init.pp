@@ -9,7 +9,7 @@ class php5() {
       'php5-gd',
     ]:
       ensure => 'latest',
-      require => Class['codility::prepare'],
+      require => Class['puppetry::prepare'],
   }
 
 # Remove apache, to use nginx

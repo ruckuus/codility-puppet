@@ -1,5 +1,5 @@
-class codility::appinstall(
-  $appname = 'codility',
+class puppetry::appinstall(
+  $appname = 'puppetry',
   $source = 'www.google.com/foo',
   $document_root = '/var/www/'
 ) {

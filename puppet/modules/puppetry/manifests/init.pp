@@ -1,8 +1,8 @@
-class codility(
+class puppetry(
   $user = 'www-data',
   $document_root = '/var/www',
   $listen_url = '127.0.0.1:9000',
-  $app_name = 'codility',
+  $app_name = 'puppetry',
   $source = 'www.google.com/foo'
 ) {
   # Setup nginx
@@ -18,7 +18,7 @@ class codility(
   file { 'nginx_default':
       path => '/etc/nginx/sites-enabled/000-default',
       ensure => present,
-      source => 'puppet:///modules/codility/nginx/000-default',
+      source => 'puppet:///modules/puppetry/nginx/000-default',
   }
 
   # Setup FPM
@@ -41,24 +41,24 @@ class codility(
   file { 'php5_fpm_ini':
     path => '/etc/php5/fpm/php.ini',
     ensure => present,
-    source => 'puppet:///modules/codility/fpm/php.ini',
+    source => 'puppet:///modules/puppetry/fpm/php.ini',
   }
 
   file { 'php5_fpm_conf':
     path => '/etc/php5/fpm/php-fpm.conf',
     ensure => present,
-    source => 'puppet:///modules/codility/fpm/php-fpm.conf',
+    source => 'puppet:///modules/puppetry/fpm/php-fpm.conf',
   }
 
   # Configure nginx and fpm pool for this app
-  class { 'codility::appconfig':
+  class { 'puppetry::appconfig':
     user => $user,
     listen_url => $listen_url,
     app_name => $app_name,
     document_root => $document_root,
   }
 
-  class { 'codility::appinstall':
+  class { 'puppetry::appinstall':
     appname => $app_name,
     source => $source,
     document_root => $document_root,

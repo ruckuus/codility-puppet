@@ -1,7 +1,7 @@
-class codility::appconfig(
+class puppetry::appconfig(
   $user = 'www-data',
   $listen_url = '127.0.0.1:9000',
-  $app_name = 'codility',
+  $app_name = 'puppetry',
   $document_root = '/var/www',
   $dir_index = 'index.php'
 ) {
@@ -10,14 +10,14 @@ class codility::appconfig(
   file { 'app_php5_fpm_pool':
     path => "/etc/php5/fpm/pool.d/${app_name}.conf",
     ensure => present,
-    content => template('codility/app_php5_fpm_pool.erb')
+    content => template('puppetry/app_php5_fpm_pool.erb')
   }
 
   # Nginx config for $app_name
   file {'app_nginx_conf':
     path => "/etc/nginx/sites-available/${app_name}.conf",
     ensure => present,
-    content => template('codility/app_nginx_conf.erb'),
+    content => template('puppetry/app_nginx_conf.erb'),
   }
 
   file {'app_nginx_log_dirs':

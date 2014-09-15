@@ -1,4 +1,4 @@
-class codility::prepare {
+class puppetry::prepare {
   Exec  {
     path => [
       '/usr/bin',

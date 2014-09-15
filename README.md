@@ -1,4 +1,4 @@
-codility-puppet
+puppetry
 ===============
 
 Clone this repo, then:
