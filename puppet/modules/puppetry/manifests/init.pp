@@ -51,6 +51,7 @@ class puppetry(
     path => '/etc/php5/fpm/php.ini',
     ensure => present,
     source => 'puppet:///modules/puppetry/fpm/php.ini',
+    require => Package['php5-fpm']
   }
 
   file { 'php5_fpm_conf':

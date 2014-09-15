@@ -10,7 +10,8 @@ class puppetry::appconfig(
   file { 'app_php5_fpm_pool':
     path => "/etc/php5/fpm/pool.d/${app_name}.conf",
     ensure => present,
-    content => template('puppetry/app_php5_fpm_pool.erb')
+    content => template('puppetry/app_php5_fpm_pool.erb'),
+    notify => Exec['restart_fpm']
   }
 
   # Nginx config for $app_name
@@ -33,6 +34,7 @@ class puppetry::appconfig(
 
   exec { 'restart_fpm':
     command => "/usr/sbin/service php5-fpm restart",
+    require => File['app_php5_fpm_pool']
   }
 
   exec { 'restart_nginx':
