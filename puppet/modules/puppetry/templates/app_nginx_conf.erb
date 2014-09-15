@@ -2,7 +2,7 @@ server {
         default_type text/html;
         root <%= @document_root %>;
         index <%= @dir_index %>;
-        server_name dev.<%= @app_name %>.com;
+        server_name <%= @server_names %>;
         listen 80;
 
         rewrite_log off;
