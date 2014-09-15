@@ -1,3 +1,7 @@
 .vagrant*
 repo/foliogalery
 *.swp
+developer
+integration
+staging
+production
