@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 puts <<eof
-Hello, Symfony2!
+Hello, Puppetry!
 eof
 
 $post = <<SCRIPT
