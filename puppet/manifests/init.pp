@@ -6,7 +6,7 @@ class { 'puppetry::prepare':
   stage => preinstall
 }
 
-package { ['nginx', 'curl', 'wget', 'unzip']:
+package { ['nginx', 'curl', 'wget', 'unzip', 'vim']:
   ensure => 'present',
   require => Class['puppetry::prepare']
 }
