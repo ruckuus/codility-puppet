@@ -2,11 +2,13 @@ stage { 'preinstall':
   before => Stage['main']
 }
 
+class { 'devtools': }
+
 class { 'puppetry::prepare':
   stage => preinstall
 }
 
-package { ['nginx', 'curl', 'wget', 'unzip', 'vim']:
+package { 'nginx':
   ensure => 'present',
   require => Class['puppetry::prepare']
 }
