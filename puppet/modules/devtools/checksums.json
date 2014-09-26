@@ -1,0 +1,13 @@
+{
+  "Gemfile": "dbc1a15e3a264c03878028240cfc5d89",
+  "Gemfile.lock": "2a718294a2885a385fc40314282aa5ff",
+  "README.md": "2d2a8010fe07dad5fd4dc52d34e82584",
+  "Rakefile": "20b80e526e351a74df2001f504e756d2",
+  "manifests/init.pp": "342a98ee5e323afedf7c45c133b05f00",
+  "metadata.json": "98efc07b6cf426e59818e177b4655371",
+  "spec/classes/devtools_spec.rb": "5c8c359fb2c59e6522b3153d628c8afc",
+  "spec/devtools_installation_spec.rb": "d41d8cd98f00b204e9800998ecf8427e",
+  "spec/fixtures/manifests/site.pp": "d41d8cd98f00b204e9800998ecf8427e",
+  "spec/spec_helper.rb": "792eeb7aa7edafb93e2bc1d27c5e75c5",
+  "tests/init.pp": "31e75e186772f0e30845a3c0bdc783d5"
+}
