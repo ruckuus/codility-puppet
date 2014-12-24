@@ -31,3 +31,4 @@ rvm_system_ruby {
 
 }
 
+include '::mysql::server'
