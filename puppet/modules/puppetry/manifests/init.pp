@@ -1,3 +1,4 @@
+
 class puppetry(
   $user = 'www-data',
   $document_root = '/var/www',
@@ -14,63 +15,23 @@ class puppetry(
     $server_names = "${env}.${app_name}.${tld}"
   }
 
-  # Setup nginx
-  file { ['/etc/nginx/sites-available', '/etc/nginx/sites-enabled']:
-    ensure => directory,
-    owner => 'root',
-    group => 'root',
-    mode => 0755,
-    recurse => true,
-    purge => true,
+  nginx::resource::vhost { "${app_name}":
+    www_root => $document_root,
   }
 
-  file { 'nginx_default':
-      path => '/etc/nginx/sites-enabled/000-default',
-      ensure => present,
-      source => 'puppet:///modules/puppetry/nginx/000-default',
-  }
-
-  # Setup FPM
-  exec { 'php5_fpm_setup_dirs':
-    command => "/bin/mkdir -p /etc/php5/fpm/pool.d"
-  }
-
-  file { 'php5_fpm_confd':
-    path => '/etc/php5/fpm/conf.d',
-    ensure => link,
-    target => "../conf.d",
-    require => Exec['php5_fpm_setup_dirs']
-  }
-
-  file { '/var/log/php5-fpm':
-    ensure => directory,
-    purge => false,
-  }
-
-  file { 'php5_fpm_ini':
-    path => '/etc/php5/fpm/php.ini',
+  nginx::resource::location { "${app_name}":
     ensure => present,
-    source => 'puppet:///modules/puppetry/fpm/php.ini',
-    require => Package['php5-fpm']
+    ssl => false,
+    ssl_only => false,
+    vhost => $app_name,
+    www_root => $document_root,
+    location => '~ \.php$',
+    index_files => ['index.php', 'index.html'],
+    proxy => undef,
+    fastcgi => $listen_url,
+    fastcgi_param => {
+      'DOCUMENT_ROOT' => $document_root,
+    }
   }
 
-  file { 'php5_fpm_conf':
-    path => '/etc/php5/fpm/php-fpm.conf',
-    ensure => present,
-    source => 'puppet:///modules/puppetry/fpm/php-fpm.conf',
-  }
-
-  # Configure nginx and fpm pool for this app
-  class { 'puppetry::appconfig':
-    user => $user,
-    listen_url => $listen_url,
-    app_name => $app_name,
-    document_root => $document_root,
-  }
-
-  class { 'puppetry::appinstall':
-    appname => $app_name,
-    source => $source,
-    document_root => $document_root,
-  }
 }

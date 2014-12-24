@@ -8,10 +8,12 @@ class { 'puppetry::prepare':
   stage => preinstall
 }
 
-package { 'nginx':
-  ensure => 'present',
+# Install nginx
+class { 'nginx': 
   require => Class['puppetry::prepare']
 }
 
-class { ['php5']:
+class { ['php::fpm', 'php::cli', 'php::extension::apc']:
+
 }
+
