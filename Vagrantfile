@@ -14,7 +14,7 @@ SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "dev.symfony2.com"
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.define "developer", primary: true do |developer|
     developer.vm.synced_folder "developer", "/var/www", :nfs => { :mount_options => ["dmode=777, fmode=666"] }
