@@ -18,3 +18,16 @@ class { ['php::fpm', 'php::cli', 'php::extension::apc']:
 }
 
 include rvm
+
+rvm::system_user { vagrant: ; }
+
+rvm_system_ruby {
+  'ruby-2.1.5':
+    ensure      => 'present',
+    default_use => true;
+  'ruby-2.0-dev':
+    ensure      => 'present',
+    default_use => false;
+
+}
+
