@@ -13,7 +13,7 @@ sudo service php5-fpm restart
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.hostname = "dev.symfony2.com"
+  config.vm.hostname = "dev.puppetry.com"
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.define "developer", primary: true do |developer|
@@ -24,6 +24,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.module_path = "puppet/modules"
       puppet.manifests_path = "puppet"
       puppet.manifest_file = "manifests/dev.pp"
+      # puppet.hiera_config_path = "hiera.yaml"
+      # puppet.working_directory = "/tmp/vagrant-puppet-2"
+      # puppet.options = "--verbose --debug"
     end
     developer.vm.provision "shell", inline: $post, privileged: false
   end

@@ -17,3 +17,4 @@ class { ['php::fpm', 'php::cli', 'php::extension::apc']:
 
 }
 
+include rvm
