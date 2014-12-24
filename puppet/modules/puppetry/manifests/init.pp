@@ -2,7 +2,7 @@
 class puppetry(
   $user = 'www-data',
   $document_root = '/var/www',
-  $listen_url = '127.0.0.1:9000',
+  $listen_url = 'unix:///var/run/php5-fpm.sock',
   $app_name = 'puppetry',
   $source = 'www.google.com/foo',
   $env = 'dev',
@@ -15,15 +15,16 @@ class puppetry(
     $server_names = "${env}.${app_name}.${tld}"
   }
 
-  nginx::resource::vhost { "${app_name}":
+  nginx::resource::vhost { "puppetry":
     www_root => $document_root,
+    server_name => [ $server_names ],
   }
 
   nginx::resource::location { "${app_name}":
     ensure => present,
     ssl => false,
     ssl_only => false,
-    vhost => $app_name,
+    vhost => "puppetry",
     www_root => $document_root,
     location => '~ \.php$',
     index_files => ['index.php', 'index.html'],
@@ -33,5 +34,4 @@ class puppetry(
       'DOCUMENT_ROOT' => $document_root,
     }
   }
-
 }
